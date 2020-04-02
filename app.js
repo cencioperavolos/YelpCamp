@@ -18,9 +18,10 @@ var commentRoutes = require("./routes/comments"),
     indexRoutes = require("./routes/index");
 
 // mongodb+srv://testUser:<password>@cluster0-qnesc.mongodb.net/test?retryWrites=true&w=majority
+// process.env.databaseUrl = 'mongodb://localhost/yelp_camp'; //local
+const databaseUrl = process.env.DATABASEURL || 'mongodb://localhost/yelp_camp';
 
-// mongoose.connect('mongodb://localhost/yelp_camp',
-mongoose.connect('mongodb+srv://testUser:testPassuord@cluster0-qnesc.mongodb.net/test?retryWrites=true&w=majority',
+mongoose.connect(databaseUrl,
     { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }).then(() => {
         console.log('Connected to DB.')
     }).catch((err) => {
@@ -60,5 +61,5 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 
 var port = process.env.PORT || 3000
 app.listen(port, function () {
-    console.log("YelpCamp express server listening on port 80!");
+    console.log("YelpCamp express server listening on port " + port);
 }) 
