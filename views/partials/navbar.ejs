@@ -1,0 +1,43 @@
+<nav class="navbar sticky-top navbar-expand-md navbar-light bg-light mb-2">
+    <a class="navbar-brand" href="/">YelpCamp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+        </ul>
+
+        <ul class="navbar-nav">
+            <% if(!currentUser){ %>
+            <li class="nav-item">
+                <a href="/login" class="nav-link">Log in</a>
+            </li>
+            <li class="nav-item">
+                <a href="/register" class="nav-link">Sign up</a>
+            </li>
+            <% } else { %>
+            <span class="navbar-text mr-2"> currently signed as: <strong><%= currentUser.username %></strong></span>
+            <li class="nav-item">
+                <a href="/logout" class="nav-link">Log out</a>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+</nav>
+<% if(error.length > 0) { %>
+<div class="container">
+    <div class="alert alert-danger" role="alert">
+        <%= error %>
+    </div>
+</div>
+<% } %>
+<% if(success.length > 0) { %>
+<div class="container">
+    <div class="alert alert-success" role="alert">
+        <%= success %>
+    </div>
+</div>
+<% } %>

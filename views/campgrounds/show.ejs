@@ -1,0 +1,82 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Campground Detail</p>
+            <ul class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <img class="card-img-top" src="<%=campground.image%>" alt="">
+                <span style="font-size: xx-small;"><em><%=campground.image%></em></span>
+                <div class="card-body">
+                    <div class="d-flex flex-row justify-content-between align-items-start mb-2">
+                        <div>
+                            <h4 class="card-title text-primary" href="#"><%=campground.name%></h4>
+                            <h6 class="sub-title font-italic">Submitted by: <%=campground.author.username%></h6>
+                        </div>
+                        <div class="d-flex flex-column align-items-end">
+                            <h6 class="sub-title">$ <%=campground.price%>/night</h6>
+                            <% if ( currentUser && campground.author.id.equals(currentUser._id) ){ %>
+                            <div>
+                                <a class="btn btn-warning btn-sm" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
+                                <form class="d-inline" action="/campgrounds/<%=campground._id%>?_method=DELETE"
+                                    method="POST">
+                                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                                </form>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <p class="card-text border p-1"><%=campground.description%></p>
+                </div>
+            </div>
+            <div class="card bg-light my-2">
+                <div class="card-header d-flex justify-content-between">
+                    <h5 class="card-title">Comments</h5>
+                    <nav class="nav justify-content-end">
+                        <a href="/campgrounds/<%=campground._id%>/comments/new" class="nav-link btn btn-success">Add New
+                            Comment</a>
+                    </nav>
+                </div>
+                <div class="card-body">
+                    <% campground.comments.forEach((comment) => { %>
+                    <div class="d-flex justify-content-between">
+                        <span><strong><%=comment.author.username %></strong></span>
+                        <div class="d-flex flex-column align-items-end">
+                            <span style="font-size: small; margin-bottom: 0.5em;"><em>10 days ago</em></span>
+                            <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
+                            <div class="d-flex">
+                                <a href="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>/edit"
+                                    class="btn btn-sm btn-outline-warning mx-1">Edit</a>
+                                <form action="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>?_method=DELETE"
+                                    method="POST">
+                                    <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <pre><%=comment.text %></pre>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-5">
+        <div class="col d-flex justify-content-end">
+            <a class="btn btn-outline-primary" href="/campgrounds">Go Back</a>
+        </div>
+    </div>
+
+</div>
+
+<%- include("../partials/footer") %>
